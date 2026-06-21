@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.white.withOpacity(0.1)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.3 : 0.1),
+                color: Colors.black.withOpacity(isDark ? 0.3 : 0.25),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -191,7 +191,7 @@ class MallCard extends StatelessWidget {
           border: Border.all(color: AppTheme.primaryLight.withOpacity(0.1)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.4 : 0.1),
+              color: Colors.black.withOpacity(isDark ? 0.4 : 0.25),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),

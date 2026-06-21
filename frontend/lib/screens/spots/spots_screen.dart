@@ -249,22 +249,26 @@ class _SpotsScreenState extends State<SpotsScreen> {
           final totalDiscount = rewardDiscount + promoDiscount;
           final totalPrice = (basePrice - totalDiscount).clamp(0.0, double.infinity);
 
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+
           return Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF121212), Color(0xFF1A1A1A)],
+              gradient: LinearGradient(
+                colors: isDark 
+                  ? const [Color(0xFF121212), Color(0xFF1A1A1A)] 
+                  : [Colors.white, const Color(0xFFF3F4F6)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.8),
+                  color: Colors.black.withOpacity(isDark ? 0.8 : 0.2),
                   blurRadius: 30,
                   spreadRadius: 10,
                 )
               ],
-              border: Border.all(color: Colors.white.withOpacity(0.05), width: 1),
+              border: Border.all(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05), width: 1),
             ),
             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20, top: 12, left: 24, right: 24),
             child: SingleChildScrollView(
@@ -279,7 +283,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
                       height: 5,
                       margin: const EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -294,7 +298,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
                         children: [
                           Text(
                             isPaymentStep ? "Secure Payment" : "Reservation", 
-                            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5)
+                            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: isDark ? Colors.white : Colors.black87, letterSpacing: -0.5)
                           ),
                           const SizedBox(height: 4),
                           Text("${widget.mall['name']} • Spot ${spot['spotNumber']}", style: TextStyle(fontSize: 13, color: Colors.grey[500], fontWeight: FontWeight.w500)),
@@ -302,12 +306,12 @@ class _SpotsScreenState extends State<SpotsScreen> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.05),
+                          color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
                           borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.white.withOpacity(0.05)),
+                          border: Border.all(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05)),
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.close_rounded, color: Colors.white70, size: 22),
+                          icon: Icon(Icons.close_rounded, color: isDark ? Colors.white70 : Colors.black54, size: 22),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ),
@@ -399,16 +403,16 @@ class _SpotsScreenState extends State<SpotsScreen> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _carPlateController,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black87, fontWeight: FontWeight.w600, fontSize: 16),
                       decoration: InputDecoration(
                         hintText: "ABC-1234",
-                        hintStyle: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.normal),
+                        hintStyle: TextStyle(color: isDark ? Colors.grey[700] : Colors.grey[400], fontWeight: FontWeight.normal),
                         errorText: carPlateError,
                         filled: true,
-                        fillColor: const Color(0xFF1E1E1E),
+                        fillColor: isDark ? const Color(0xFF1E1E1E) : Colors.grey[100],
                         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
                         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF6366F1), width: 1.5)),
                         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
                         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -501,7 +505,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
                                 children: [
                                   const Text("Payable Amount", style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500)),
                                   const SizedBox(height: 8),
-                                  Text("${totalPrice.toStringAsFixed(2)} EGP", style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1)),
+                                  Text("${totalPrice.toStringAsFixed(2)} EGP", style: TextStyle(color: isDark ? Colors.white : Colors.black87, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1)),
                                 ],
                               ),
                               Container(
@@ -533,7 +537,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: cardController,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black87),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -541,13 +545,13 @@ class _SpotsScreenState extends State<SpotsScreen> {
                       ],
                       decoration: InputDecoration(
                         hintText: "0000 0000 0000 0000",
-                        hintStyle: TextStyle(color: Colors.grey[700]),
+                        hintStyle: TextStyle(color: isDark ? Colors.grey[700] : Colors.grey[400]),
                         errorText: cardError != null ? "" : null,
                         errorStyle: const TextStyle(height: 0),
                         filled: true,
-                        fillColor: const Color(0xFF1E1E1E),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
+                        fillColor: isDark ? const Color(0xFF1E1E1E) : Colors.grey[100],
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
                         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF6366F1), width: 1.5)),
                         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
                         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -575,18 +579,18 @@ class _SpotsScreenState extends State<SpotsScreen> {
                               const SizedBox(height: 8),
                               TextField(
                                 controller: expiryController,
-                                style: const TextStyle(color: Colors.white),
+                                style: TextStyle(color: isDark ? Colors.white : Colors.black87),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(4), DateInputFormatter()],
                                 decoration: InputDecoration(
                                   hintText: "MM/YY",
-                                  hintStyle: TextStyle(color: Colors.grey[700]),
+                                  hintStyle: TextStyle(color: isDark ? Colors.grey[700] : Colors.grey[400]),
                                   errorText: expiryError != null ? "" : null,
                                   errorStyle: const TextStyle(height: 0),
                                   filled: true,
-                                  fillColor: const Color(0xFF1E1E1E),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
-                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
+                                  fillColor: isDark ? const Color(0xFF1E1E1E) : Colors.grey[100],
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
+                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
                                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF6366F1), width: 1.5)),
                                   errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
                                   focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -613,7 +617,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
                               const SizedBox(height: 8),
                               TextField(
                                 controller: cvvController,
-                                style: const TextStyle(color: Colors.white),
+                                style: TextStyle(color: isDark ? Colors.white : Colors.black87),
                                 obscureText: true,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -622,13 +626,13 @@ class _SpotsScreenState extends State<SpotsScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   hintText: "123",
-                                  hintStyle: TextStyle(color: Colors.grey[700]),
+                                  hintStyle: TextStyle(color: isDark ? Colors.grey[700] : Colors.grey[400]),
                                   errorText: cvvError != null ? "" : null,
                                   errorStyle: const TextStyle(height: 0),
                                   filled: true,
-                                  fillColor: const Color(0xFF1E1E1E),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
-                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.white.withOpacity(0.05))),
+                                  fillColor: isDark ? const Color(0xFF1E1E1E) : Colors.grey[100],
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
+                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: (isDark ? Colors.white : Colors.black).withOpacity(0.05))),
                                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF6366F1), width: 1.5)),
                                   errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
                                   focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -656,12 +660,12 @@ class _SpotsScreenState extends State<SpotsScreen> {
                           Expanded(
                             child: TextField(
                               controller: promoController,
-                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              style: TextStyle(color: isDark ? Colors.white : Colors.black87, fontSize: 14),
                               decoration: InputDecoration(
                                 hintText: "Promo Code",
-                                hintStyle: TextStyle(color: Colors.grey[700]),
+                                hintStyle: TextStyle(color: isDark ? Colors.grey[700] : Colors.grey[400]),
                                 filled: true,
-                                fillColor: const Color(0xFF1A1A1A),
+                                fillColor: isDark ? const Color(0xFF1A1A1A) : Colors.grey[200],
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
                               ),
@@ -903,19 +907,20 @@ class _SpotsScreenState extends State<SpotsScreen> {
   }
 
   Widget _buildTimeSelector({required String label, required IconData icon, bool isError = false}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         border: Border.all(
-          color: isError ? Colors.red : Colors.white.withOpacity(0.08),
+          color: isError ? Colors.red : (isDark ? Colors.white : Colors.black).withOpacity(0.08),
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           if (!isError)
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             )
@@ -927,7 +932,7 @@ class _SpotsScreenState extends State<SpotsScreen> {
           Text(
             label, 
             style: TextStyle(
-              color: label.contains(':') ? Colors.white : Colors.grey[600], 
+              color: label.contains(':') ? (isDark ? Colors.white : Colors.black87) : Colors.grey[600], 
               fontSize: 16, 
               fontWeight: FontWeight.w600,
               letterSpacing: 0.5,

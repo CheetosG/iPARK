@@ -70,18 +70,19 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
         return StatefulBuilder(
           builder: (context, setDialogState) {
+            final isDark = Theme.of(context).brightness == Brightness.dark;
             return Dialog(
               backgroundColor: Colors.transparent,
               insetPadding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1C1C1E),
+                  color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
                   borderRadius: BorderRadius.circular(32),
-                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  border: Border.all(color: (isDark ? Colors.white : Colors.black).withOpacity(0.08)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
                       blurRadius: 40,
                       offset: const Offset(0, 20),
                     ),
@@ -100,10 +101,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.05),
+                                color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(Icons.close, color: Colors.white.withOpacity(0.4), size: 20),
+                              child: Icon(Icons.close, color: (isDark ? Colors.white : Colors.black).withOpacity(0.4), size: 20),
                             ),
                           ),
                         ),
@@ -123,14 +124,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       "Verify Arrival",
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black87, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       "Enter your plate number to unlock your spot",
-                      style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
+                      style: TextStyle(color: (isDark ? Colors.white : Colors.black).withOpacity(0.5), fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -138,10 +139,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: errorText != null ? Colors.red.withOpacity(0.08) : Colors.white.withOpacity(0.03),
+                        color: errorText != null ? Colors.red.withOpacity(0.08) : (isDark ? Colors.white.withOpacity(0.03) : Colors.black.withOpacity(0.03)),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: errorText != null ? Colors.red.withOpacity(0.8) : Colors.white.withOpacity(0.1),
+                          color: errorText != null ? Colors.red.withOpacity(0.8) : (isDark ? Colors.white : Colors.black).withOpacity(0.1),
                           width: errorText != null ? 1.5 : 1,
                         ),
                         boxShadow: errorText != null ? [
@@ -157,8 +158,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         textAlign: TextAlign.center,
                         autofocus: true,
                         textCapitalization: TextCapitalization.characters,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: isDark ? Colors.white : Colors.black87,
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 4,
@@ -168,7 +169,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         },
                         decoration: InputDecoration(
                           hintText: "ABC-1234",
-                          hintStyle: TextStyle(color: Colors.white.withOpacity(0.15), letterSpacing: 2),
+                          hintStyle: TextStyle(color: (isDark ? Colors.white : Colors.black).withOpacity(0.15), letterSpacing: 2),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.zero,
                         ),
@@ -333,18 +334,19 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
         return StatefulBuilder(
           builder: (context, setDialogState) {
+            final isDark = Theme.of(context).brightness == Brightness.dark;
             return Dialog(
               backgroundColor: Colors.transparent,
               insetPadding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1C1C1E),
+                  color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
                   borderRadius: BorderRadius.circular(32),
-                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  border: Border.all(color: (isDark ? Colors.white : Colors.black).withOpacity(0.08)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
                       blurRadius: 40,
                       offset: const Offset(0, 20),
                     ),
@@ -362,10 +364,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.05),
+                                color: (isDark ? Colors.white : Colors.black).withOpacity(0.05),
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(Icons.close, color: Colors.white.withOpacity(0.4), size: 20),
+                              child: Icon(Icons.close, color: (isDark ? Colors.white : Colors.black).withOpacity(0.4), size: 20),
                             ),
                           ),
                         ),
@@ -385,24 +387,24 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       "Re-verify Plate",
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black87, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       "Enter your plate number to re-open the gate",
-                      style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
+                      style: TextStyle(color: (isDark ? Colors.white : Colors.black).withOpacity(0.5), fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: errorText != null ? Colors.red.withOpacity(0.08) : Colors.white.withOpacity(0.03),
+                        color: errorText != null ? Colors.red.withOpacity(0.08) : (isDark ? Colors.white.withOpacity(0.03) : Colors.black.withOpacity(0.03)),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: errorText != null ? Colors.red.withOpacity(0.8) : Colors.white.withOpacity(0.1),
+                          color: errorText != null ? Colors.red.withOpacity(0.8) : (isDark ? Colors.white : Colors.black).withOpacity(0.1),
                           width: errorText != null ? 1.5 : 1,
                         ),
                         boxShadow: errorText != null ? [
@@ -418,8 +420,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         textAlign: TextAlign.center,
                         autofocus: true,
                         textCapitalization: TextCapitalization.characters,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: isDark ? Colors.white : Colors.black87,
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 4,
@@ -429,7 +431,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         },
                         decoration: InputDecoration(
                           hintText: "ABC-1234",
-                          hintStyle: TextStyle(color: Colors.white.withOpacity(0.15), letterSpacing: 2),
+                          hintStyle: TextStyle(color: (isDark ? Colors.white : Colors.black).withOpacity(0.15), letterSpacing: 2),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.zero,
                         ),
