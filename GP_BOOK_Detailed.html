@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPARK - Final Graduation Project Thesis</title>
+    <!-- Parse markdown locally in the browser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: 'Times New Roman', serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 40px auto; padding: 60px; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        h1 { font-family: 'Arial', sans-serif; color: #2c3e50; border-bottom: 4px solid #2c3e50; padding-bottom: 15px; text-align: center; text-transform: uppercase; letter-spacing: 2px; font-size: 2.2em; }
+        h2 { font-family: 'Arial', sans-serif; color: #2980b9; margin-top: 60px; border-bottom: 2px solid #3498db; padding-bottom: 10px; text-transform: uppercase; page-break-before: always; }
+        h3 { font-family: 'Arial', sans-serif; color: #16a085; margin-top: 35px; border-left: 6px solid #16a085; padding-left: 15px; }
+        h4 { font-family: 'Arial', sans-serif; color: #2c3e50; margin-top: 25px; font-weight: bold; font-style: italic; }
+        p, li { font-size: 1.15em; margin-bottom: 18px; text-align: justify; }
+        ul, ol { padding-left: 35px; font-size: 1.15em; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 1em; }
+        th, td { border: 1px solid #7f8c8d; padding: 15px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; font-weight: bold; color: #2c3e50; text-transform: uppercase; font-size: 0.9em; }
+        pre { background-color: #2d3436; color: #dfe6e9; padding: 25px; border-radius: 8px; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 0.95em; line-height: 1.4; }
+        code { background-color: #f1f2f6; color: #e17055; padding: 2px 5px; border-radius: 4px; font-family: 'Consolas', monospace; }
+        hr { border: 0; border-top: 3px solid #eee; margin: 70px 0; }
+        .mermaid { display: flex; justify-content: center; margin: 30px 0; }
+        em { color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        
+        // Raw markdown injected from script
+        const rawMarkdown = `# iPARK: A Real-Time Smart Parking Management System 🚗💨
+## Definitive Graduation Project Documentation
+
+---
+
+## Chapter 1: Introduction
+*[Should be delivered by Week 6]*
+
+### 1.1 Problem Definition
+The exponential growth of urban populations has outpaced the development of physical infrastructure. In major commercial centers, universities, and malls, the inability to find parking efficiently results in significant economic and environmental problems:
+*   **Wasted Time & Productivity:** An average driver spends 15-20 minutes searching for a spot during peak hours. Over a year, this amounts to days of lost productivity per person.
+*   **Fuel Inefficiency & Environmental Impact:** Constant idling and low-speed circling significantly increase fuel consumption and greenhouse gas emissions.
+*   **Traffic Congestion:** Research indicates that "cruising for parking" can contribute up to 30% of traffic in business districts. It creates bottlenecks and delays for all commuters.
+*   **User Frustration & Economic Loss:** A poor arrival experience negatively impacts a user's perception of the destination. Shoppers may abandon trips entirely, leading to direct revenue loss for commercial centers.
+*   **Inefficient Space Utilization:** Lot owners lack real-time data to optimize parking capacity, often leaving some areas empty while others are congested.
+
+### 1.2 Objectives
+The iPARK project aims to digitize the physical parking lot into a manageable, real-time asset, creating a frictionless experience for both drivers and facility managers. 
+1.  **Real-Time Status Monitoring:** Utilizing WebSockets and IoT integration to provide 100% accurate, live visibility of spot occupancy to users before they arrive.
+2.  **Advanced Reservation System:** Enabling users to pre-book spots, ensuring a guaranteed space upon arrival and eliminating the uncertainty of parking.
+3.  **Automated Gate Control:** Integrating hardware (ESP32 microcontrollers) with the cloud backend to automatically open gates upon successful plate verification or booking validation.
+4.  **Revenue & Analytics Dashboard:** Empowering mall owners and admins with data-driven insights into usage patterns, peak times, and financial analytics.
+5.  **Incentivized Usage (Gamification):** Encouraging efficient behavior through a point-based reward system where users earn discounts for consistent usage.
+6.  **Instant Support:** Providing a built-in real-time support chat system bridging users and administrative staff.
+
+### 1.3 Scope of Work
+The system is a comprehensive, decoupled full-stack application spanning software and hardware components:
+*   **Mobile Client (Flutter):** A cross-platform mobile application (Android & iOS) providing intuitive interfaces for Drivers. Features include: live real-time parking grid visualization, full reservation lifecycle management (book, cancel, extend, leave-early), simulated payment processing with dynamic pricing and promo codes, user profile management (car plate, photo, points), IoT gate verification flow, and a real-time support chat module.
+*   **Management Dashboard (Web):** A responsive web interface for Administrators and Support staff to manage malls, view system health metrics, add/remove/disable parking spots, resolve user tickets, ban malicious accounts, and broadcast announcements.
+*   **Centralized Backend (Node.js/Express):** A robust RESTful API server handling all authentication, business logic (dynamic pricing, overlap validation), payment simulation, error logging, and database interactions. Protected by JWT middleware and rate-limiting.
+*   **Real-time Engine (Socket.IO):** A bi-directional event broadcasting system that runs alongside the HTTP server, pushing live state changes — spot occupancy, IoT events, chat messages, admin alerts — to all connected clients within milliseconds.
+*   **Persistent Data Store (MongoDB Atlas):** A cloud-based NoSQL database providing high-availability, automated backups, compound indexing for fast queries, and horizontal scaling through Atlas sharding.
+*   **Hardware / IoT Integration (ESP32):** Physical microcontroller firmware (C++) that communicates with the cloud backend via WebSockets, simulating gate open/close relays and occupancy sensors.
+*   **Background Sync Worker:** A server-side cron-style job that runs every 5 seconds to enforce reservation lifecycle states (pending → active → completed) and automatically free spots whose reservation window has passed.
+
+
+### 1.4 Stakeholders
+| Stakeholder | Role / Interest |
+| :--- | :--- |
+| **Drivers (Users)** | Direct consumers seeking efficiency, predictability, and convenience in their parking experience. |
+| **Mall Management** | Business owners interested in operational efficiency, maximizing parking capacity, and revenue generation. |
+| **System Administrators** | IT personnel responsible for adding infrastructure (Malls, Spots) and overseeing platform health. |
+| **Support Staff** | Agents responsible for resolving user disputes, assisting with gate issues, and handling system tickets. |
+| **Developers/Engineers** | The project team responsible for building, deploying, and maintaining the codebase and hardware infrastructure. |
+
+### 1.5 Assumptions & Constraints
+*   **Connectivity:** Users must have a stable 4G/5G/Wi-Fi connection to receive live grid updates and interact with the physical gates.
+*   **Infrastructure Hardware:** Malls must have IoT-enabled barriers and sensors installed to communicate with the iPARK cloud.
+*   **Latency Constraints:** The system assumes a maximum network latency of 2 seconds for acceptable real-time synchronization; higher latencies may lead to race conditions at physical gates.
+*   **Platform Dependency:** The mobile application relies on the Flutter framework, assuming ongoing support from Google for future OS updates (Android/iOS).
+
+### 1.6 Project Plan and WBS (Work Breakdown Structure)
+| Phase | Duration | Key Deliverables |
+| :--- | :--- | :--- |
+| **Planning** | 3 Weeks | Feasibility Report, Tech Stack selection, Hardware component sourcing. |
+| **Requirements** | 3 Weeks | UML Diagrams (Use Case, Context), Software Requirements Specification (SRS). |
+| **Design** | 4 Weeks | Database ERD, UI/UX Mockups (Figma), High-Level and Low-Level Architecture Design. |
+| **Development** | 8 Weeks | Backend API construction, Real-time Socket Engine, Flutter UI implementation, IoT firmware. |
+| **Testing** | 4 Weeks | Security Audit, Performance Load Testing, Hardware Integration Testing, Bug Resolution. |
+| **Deployment** | 2 Weeks | Final Documentation, Presentation, Production Builds, Cloud hosting setup. |
+
+---
+
+## Chapter 2: Requirements Engineering and Analysis
+*[Should be delivered by week 11]*
+
+### 2.1 Functional Requirements (FR)
+
+#### User Management & Authentication
+*   **FR-1.1:** The system shall allow users to register using their email, name, and password.
+*   **FR-1.2:** The system shall authenticate users using JWT (JSON Web Tokens) for secure session management.
+*   **FR-1.3:** The system must implement an OTP (One-Time Password) verification flow for account activation and password recovery.
+*   **FR-1.4:** The system shall allow users to update their profile information, including their default car plate number and profile photo.
+
+#### Reservation & Grid Management
+*   **FR-2.1:** The system shall display a real-time visual grid of parking spots, indicating status by color (Green=Available, Red=Occupied, Yellow=Expiring Soon).
+*   **FR-2.2:** The system shall allow users to select an available spot and specify a start time and end time for reservation.
+*   **FR-2.3:** The system must automatically validate that the selected time slot does not overlap with any existing reservations for that specific spot or that specific user.
+*   **FR-2.4:** The system shall dynamically calculate the total price based on the mall's hourly rate, the duration, any applied promo codes, and the user's loyalty rewards.
+*   **FR-2.5:** The system shall allow users to cancel pending reservations or "leave early" from active reservations to free the spot.
+
+#### Real-Time Engine & IoT Integration
+*   **FR-3.1:** The backend must broadcast spot status updates to all connected mobile clients within 1000ms of a state change in the database.
+*   **FR-3.2:** The system shall listen for IoT events (e.g., car detected leaving early) and prompt the user on their mobile device to confirm departure or re-verify their plate.
+*   **FR-3.3:** The system shall trigger physical gate opening commands via WebSockets upon successful user arrival verification.
+
+#### Support & Chat System
+*   **FR-4.1:** The system shall provide a real-time text-based chat interface connecting users with available support agents.
+*   **FR-4.2:** The system shall persist chat histories so users can review past conversations.
+
+#### Admin & Staff Capabilities
+*   **FR-5.1:** Administrators shall have the ability to create, update, and delete Mall entities and their associated parking Spots.
+*   **FR-5.2:** Administrators shall be able to view system-wide revenue, active bookings, and user statistics.
+*   **FR-5.3:** Administrators shall have the capability to promote users to 'Support' or 'Admin' roles, and ban malicious users from the platform.
+
+### 2.2 Non-Functional Requirements (NFR)
+*   **NFR-1 Scalability:** The Node.js backend and MongoDB database must support horizontal scaling. The system should comfortably handle 10,000 concurrent WebSocket connections.
+*   **NFR-2 Security (Data at Rest):** All sensitive user data (passwords) must be hashed using bcrypt before database insertion. MongoDB Atlas storage must be encrypted.
+*   **NFR-3 Security (Data in Transit):** All API communications must be secured over HTTPS/WSS (TLS 1.2+).
+*   **NFR-4 Performance:** REST API endpoints must respond within 300ms under normal load. Real-time grid updates must render on the mobile client within 100ms of receiving the socket event.
+*   **NFR-5 Integrity & Concurrency:** The database must utilize atomic operations (\`findOneAndUpdate\`) to strictly prevent race conditions where two users attempt to book the identical spot simultaneously.
+*   **NFR-6 Usability:** The mobile application must follow modern accessibility guidelines, maintaining high contrast ratios (premium dark mode) and intuitive navigation requiring no more than 3 taps to initiate a booking.
+
+### 2.3 Context Diagram
+The Context Diagram illustrates the iPARK system at the highest level of abstraction, showing how it interacts with external entities.
+
+\`\`\`mermaid
+flowchart TD
+    %% Define external actors and systems
+    Driver((Driver / Mobile User))
+    Admin((System Administrator))
+    Support((Support Agent))
+    
+    System{iPARK Central Cloud System}
+    
+    IoT[Physical IoT Gates & Sensors]
+    EmailService[Email/OTP Gateway]
+    Stripe[Payment Gateway API]
+    MapsAPI[Google Maps API]
+    CloudStore[Cloudinary]
+    PushNotifier[FCM Push Notifier]
+
+    %% Core User Interactions
+    Driver <-->|1. Requests Grid <br> 2. Submits Booking <br> 3. Verifies Arrival| System
+    Admin <-->|1. Provisions Malls <br> 2. Views Analytics <br> 3. Manages Users| System
+    Support <-->|1. Resolves Tickets <br> 2. Live Chat Troubleshooting| System
+    
+    %% External API Integrations
+    System <-->|1. Emits Gate Commands <br> 2. Receives Sensor States| IoT
+    System -->|Delivers OTP & Receipts| EmailService
+    System <-->|1. Authorizes Cards <br> 2. Processes Refunds| Stripe
+    System -->|Fetches Geolocation Data| MapsAPI
+    System -->|Uploads Images| CloudStore
+    System -->|Triggers Reminders| PushNotifier
+\`\`\`
+
+### 2.4 Use-Case Diagram
+This diagram outlines the primary interactions different actors have with the system functionalities.
+
+\`\`\`mermaid
+flowchart LR
+    classDef actorStyle fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#fff
+    classDef ucStyle fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#e0e0e0
+
+    Driver(( Driver ))
+    Admin(( Admin ))
+    Support(( Support ))
+    IoT(( IoT Hardware ))
+
+    subgraph SYS [iPARK System Boundary]
+        UC1[Register and Login]
+        UC2[View Live Spot Grid]
+        UC3[Reserve Parking Spot]
+        UC4[Verify Arrival and Open Gate]
+        UC5[Chat with Support]
+        UC6[Manage Malls and Spots]
+        UC7[Ban and Manage Users]
+        UC8[Detect Car Presence]
+    end
+
+    Driver --> UC1
+    Driver --> UC2
+    Driver --> UC3
+    Driver --> UC4
+    Driver --> UC5
+
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC1
+
+    Support --> UC5
+    Support --> UC1
+
+    IoT --> UC8
+    UC4 -.->|Triggers Gate| IoT
+
+    class Driver,Admin,Support,IoT actorStyle
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8 ucStyle
+\`\`\`
+
+### 2.5 Class Diagram
+The Class Diagram models the core database entities and their relationships within the iPARK ecosystem.
+
+\`\`\`mermaid
+classDiagram
+    direction LR
+    class User {
+        +Id _id
+        +Str name
+        +Str email
+        +Str password
+        +Str role
+        +Str carPlate
+        +Int points
+        +Str pendingReward
+        +verifyPassword()
+        +generateAuthToken()
+    }
+    class Mall {
+        +Id _id
+        +Str name
+        +Str location
+        +Int totalSpots
+        +Dbl pricePerHour
+        +Str imageUrl
+    }
+    class Spot {
+        +Id _id
+        +Id mallId
+        +Str spotNumber
+        +Str status
+        +Id reservationId
+    }
+    class Reservation {
+        +Id _id
+        +Id userId
+        +Id spotId
+        +Id mallId
+        +Str carPlate
+        +DT startTime
+        +DT endTime
+        +Dbl amount
+        +Str status
+        +Bool needsReverify
+    }
+    class ChatMessage {
+        +Id _id
+        +Id userId
+        +Id senderId
+        +Str message
+        +DT createdAt
+        +Bool isAdmin
+    }
+
+    User "1" --> "0..*" Reservation : creates
+    User "1" --> "0..*" ChatMessage : sends
+    Mall "1" --> "1..*" Spot : contains
+    Spot "1" --> "0..1" Reservation : hosts
+    Reservation "1" --> "1" Mall : at
+\`\`\`
+
+
+### 2.6 Activity Diagram (End-to-End Booking Flow)
+This diagram uses "Swimlanes" (columns) to map the highly detailed logical flow of actions a driver takes, and how the cloud backend and database respond to successfully secure a parking spot.
+
+\`\`\`mermaid
+flowchart TD
+    subgraph Driver [Driver Mobile App]
+        Start([Start Open App])
+        SelectMall[Select Mall Destination]
+        ViewGrid[Render Live WebSockets Grid]
+        SelectSpot[Tap Available Green Spot]
+        PickTime[Pick Arrival and Departure Time]
+        ReviewCost[Review Final Cost and Promo]
+        Submit[Tap Submit Booking]
+        ShowSuccess[Display Confirmed Ticket]
+        ShowError[Display Spot Taken Error]
+        End([End Active Reservation])
+    end
+
+    subgraph Backend [Backend API Node JS]
+        FetchGrid[Fetch Initial Grid State]
+        ValidateTime{Validate Overlap and Time}
+        CalcPrice[Calculate Dynamic Price]
+        ProcessReq[Process Booking Request]
+        CheckConflict{Is Spot Still Free}
+        BroadcastEmit[Socket IO Broadcast Spot Red]
+    end
+
+    subgraph Database [Database MongoDB Atlas]
+        DB_Query[(Fetch Mall and Spots)]
+        DB_Atomic[(Atomic findOneAndUpdate)]
+    end
+
+    Start --> SelectMall
+    SelectMall --> FetchGrid
+    FetchGrid --> DB_Query
+    DB_Query --> ViewGrid
+
+    ViewGrid --> SelectSpot
+    SelectSpot --> PickTime
+    PickTime --> ValidateTime
+
+    ValidateTime -->|Invalid| ShowError
+    ValidateTime -->|Valid| CalcPrice
+    CalcPrice --> ReviewCost
+
+    ReviewCost --> Submit
+    Submit --> ProcessReq
+    ProcessReq --> DB_Atomic
+
+    DB_Atomic --> CheckConflict
+    CheckConflict -->|Conflict Occurred| ShowError
+    ShowError --> ViewGrid
+
+    CheckConflict -->|Success| BroadcastEmit
+    BroadcastEmit --> ShowSuccess
+    ShowSuccess --> End
+
+    classDef mobile fill:#2980b9,stroke:#fff,stroke-width:2px,color:#fff
+    classDef backend fill:#27ae60,stroke:#fff,stroke-width:2px,color:#fff
+    classDef db fill:#f39c12,stroke:#fff,stroke-width:2px,color:#fff
+    classDef startend fill:#8e44ad,stroke:#fff,stroke-width:2px,color:#fff
+
+    class Start,End startend
+    class SelectMall,ViewGrid,SelectSpot,PickTime,ReviewCost,Submit,ShowSuccess,ShowError mobile
+    class FetchGrid,ValidateTime,CalcPrice,ProcessReq,CheckConflict,BroadcastEmit backend
+    class DB_Query,DB_Atomic db
+\`\`\`
+
+### 2.7 Sequence Diagram (Real-time IoT Gate Interaction)
+This sequence diagram demonstrates the highly synchronized flow between the user's mobile app, the cloud backend, and the physical IoT gate controller.
+
+\`\`\`mermaid
+sequenceDiagram
+    autonumber
+    actor Driver as Driver (Mobile App)
+    participant Backend as Backend (Node.js)
+    participant Database as Database (MongoDB)
+    participant IoT as IoT Gate (ESP32)
+    
+    Driver->>Backend: Verify Arrival (Spot 10, Plate XYZ)
+    Backend->>Database: Fetch Reservation Details
+    Database-->>Backend: Return Active Reservation
+    Backend->>Backend: Validate Time Threshold & Plate
+    
+    alt is Valid
+        Backend->>Database: Update Spot 10 Status = RED
+        Backend->>Driver: Success (Verification OK)
+        Backend->>IoT: Socket Emit: open_gate(Spot 10)
+        IoT-->>Backend: Acknowledge Gate Opened
+        Backend->>Driver: Broadcast Spot 10 is RED
+    else is Invalid
+        Backend-->>Driver: Error (Too early / Wrong Plate)
+    end
+\`\`\`
+
+---
+
+## Chapter 3: System Design
+*[Should be delivered by Week 13]*
+
+### 3.1 Database Design (ERD & Optimization)
+The database schema is heavily optimized for fast read-operations to support real-time grid rendering. 
+*   **Normalization vs Denormalization:** While \`Reservations\` hold a reference to \`SpotId\`, the \`Spot\` document itself stores the \`reservationId\` of its *current* occupant. This denormalization allows the server to fetch the entire parking grid state in a single query without complex SQL-style joins.
+*   **Indexes:** Compound indexes are applied on the \`Reservation\` collection for \`[spotId, startTime, endTime]\` to radically speed up the overlap validation queries during booking attempts.
+
+### 3.2 UI/UX Design (Figma Strategy)
+The application architecture relies on a **Premium Dark Mode** visual hierarchy, designed specifically to reduce driver eye-strain and improve contrast in both dark garages and bright daylight.
+*   **Color Palette:** Deep blacks (\`#0A0A0C\`), sleek grays (\`#1C1C1E\`), and vibrant neon accents (Primary Light: \`#B2A4FF\`, Success Green: \`#4CAF50\`, Error Red: \`#F44336\`).
+*   **Typography:** The application uses Google's 'Inter' font for maximum legibility on mobile screens.
+*   **Micro-interactions:** Custom car-loader animations during API calls, smooth hero-animations during screen transitions, and haptic feedback on physical interactions (booking confirmation).
+
+### 3.3 High-Level Design (HLD) Architecture
+iPARK operates on a **Decoupled Full-Stack** model, utilizing an event-driven architecture.
+1.  **Presentation Tier:** Flutter handles UI rendering, state management (via Provider pattern), and local caching (SharedPreferences).
+2.  **Application Gateway:** Express.js acts as the traffic controller, applying JWT authentication, rate limiting, and request sanitization before hitting business logic controllers.
+3.  **Real-time Event Bus:** Socket.IO runs concurrently with the HTTP server, managing persistent TCP connections with both Mobile Clients and IoT Hardware.
+4.  **Data Tier:** MongoDB Atlas handles persistent data storage.
+
+### 3.4 Low-Level Design (LLD) Components
+*   **The Global Sync Job (The "Brain"):** A background Node.js worker that runs every 5 seconds. It iterates over active reservations, automatically transitioning spot colors to Yellow (when a session is nearing expiry) or Red (when booking time begins). It also cleans up expired reservations automatically, ensuring the grid remains accurate without manual intervention.
+*   **Error Reporting Middleware:** A centralized Express error handler (\`errorHandler.js\`) that intercepts all thrown \`AppError\` exceptions. It formats a safe JSON response for the client while simultaneously logging the full stack trace to the database (\`ErrorLog\`) and broadcasting an alert to connected Admin dashboards.
+*   **IoT Manager Class:** A singleton class that maintains the mapping of physical IoT socket connections, ensuring that gate open/close commands are routed to the precise IP/Socket associated with that specific mall's hardware.
+
+---
+
+## Chapter 4: System Implementation
+*[Delivered by Week 9 – Second Semester]*
+
+### 4.1 Technologies & Frameworks
+*   **Frontend (Mobile):** Flutter (Dart). Selected for its ability to compile natively to both iOS and Android from a single codebase, drastically reducing development overhead while maintaining 60fps performance.
+*   **Backend API:** Node.js with Express. Selected for its non-blocking, event-driven I/O model which is perfectly suited for managing thousands of concurrent WebSocket connections.
+*   **Database:** MongoDB. Selected as a NoSQL document store because the schema of IoT sensors and dynamic pricing rules can evolve rapidly during development.
+*   **Real-Time Comms:** Socket.IO. Chosen over bare WebSockets due to its automatic reconnection logic, room broadcasting capabilities, and fallback polling mechanisms.
+*   **Hardware (IoT):** ESP32 Microcontrollers (C++). Chosen for their built-in Wi-Fi capabilities, low cost, and ability to maintain stable WebSocket client connections.
+
+### 4.2 Implementation Methodology
+The project was executed utilizing the **Scrum Agile** framework:
+*   **Sprints:** 2-week iteration cycles, culminating in a demonstrable feature (e.g., Sprint 1: Auth & User Profile; Sprint 2: Grid Rendering; Sprint 3: Booking Logic; Sprint 4: IoT Gate Integration; Sprint 5: Chat & Admin Panel).
+*   **Version Control:** Git & GitHub used for feature-branch development. Strict pull-request code reviews were mandated to maintain backend stability and prevent regressions.
+*   **State Management Approach:** In Flutter, the \`Provider\` package was heavily utilized to separate business logic from UI widgets, allowing screens to reactively rebuild only when their specific dependent data (like a spot changing color) was updated over the socket.
+*   **API Design:** The REST API follows RESTful conventions with consistent JSON response envelopes: \`{ success: Boolean, data: Object, message: String }\`. All error responses include a machine-readable error code for the client to act upon.
+
+### 4.3 Key Backend Modules
+
+#### Authentication Module (\`authController.js\`)
+Handles the full user lifecycle:
+1. **Registration:** Receives \`{ name, email, password }\`. Password is hashed using \`bcrypt\` with a salt factor of 12 before storage. A JWT is returned on success.
+2. **Login:** Validates credentials against the hashed password. Returns a signed JWT containing \`{ userId, role, email }\` with a 30-day expiry.
+3. **OTP Flow (Simulated):** A 6-digit OTP is generated using \`crypto.randomInt()\`, stored temporarily in the database with a 10-minute TTL, and returned in the API response (in production, this would be sent via SMS). The client submits the OTP back to \`/api/auth/verify-otp\` to complete verification.
+4. **Role-Based Access Control (RBAC):** The \`protect\` middleware validates the JWT on every protected route. The \`restrictTo('admin', 'support')\` middleware then gates admin-only routes.
+
+#### Reservation Module (\`reservationController.js\`)
+The most complex module, handling the full booking lifecycle:
+1. **Create Booking:** Receives \`{ spotId, mallId, carPlate, startTime, endTime }\`. Runs an atomic overlap check. Calculates price. Deducts points if a reward is applied. Atomically writes the reservation and updates the Spot document to \`red\`.
+2. **Activity Feed:** Fetches all reservations for the authenticated user, populating \`mallId\` and \`spotId\` references for display.
+3. **Leave Early:** Transitions a spot from \`red\` back to \`green\` mid-session, broadcasts the change via Socket.IO, and marks the reservation as \`completed\`.
+4. **Cancel:** Only allowed on \`pending\` reservations before the booking window starts.
+
+#### Real-Time IoT Manager (\`iotManager.js\`)
+A singleton class that registers ESP32 hardware connections by \`mallId\`. When the backend needs to open a gate, it looks up the registered socket for that mall's hardware and emits the \`open_gate\` event directly to it, bypassing all other connected clients.
+
+### 4.4 Key Frontend Screens
+
+#### Home / Mall Selection Screen
+Displays a list of available malls fetched from \`/api/mall\`. Each card shows the mall name, location, total spots, available spots count (calculated from the \`Spot\` collection), price per hour, and a hero image. Tapping a card navigates to the Live Grid.
+
+#### Live Grid Screen
+The core feature screen. On mount, it:
+1. Fetches the initial grid state from \`/api/mall/:id/spots\`.
+2. Subscribes to the \`spotUpdate\` Socket.IO event to receive real-time color changes pushed by the backend.
+3. Renders a responsive grid where each cell is color-coded: **Green** (available), **Red** (occupied), **Yellow** (expiring soon), **Grey** (disabled).
+4. Tapping a green spot navigates to the Booking Sheet.
+
+#### Booking Sheet (Bottom Sheet)
+A rich UI component that allows the user to: select arrival/departure time using a time picker, apply a promo code, view the dynamically calculated cost, and submit the booking. It calls \`POST /api/reservation\` on submit.
+
+#### Activity Screen
+Shows the full booking history of the authenticated user. Each card displays: spot number, mall name, dates, total paid, and the current status badge (pending, active, completed, cancelled).
+
+#### Support Chat Screen
+A real-time messaging interface. Messages are sent via \`POST /api/chat\` and received via the \`chat_message\` Socket.IO event broadcast to the user's personal room on the server.
+
+
+---
+
+## Chapter 5: System Testing and Validation
+*[Delivered by Week 12 - Second Semester]*
+
+### 5.1 Testing Methodology and Coverage
+A rigorous testing phase was implemented to ensure the mission-critical nature of parking management did not fail under stress.
+*   **Unit Testing:** Isolated testing of pure functions in the backend, specifically the dynamic price calculation engine and the overlap detection algorithm.
+*   **Integration Testing:** Verifying the full pipeline between the Flutter app, REST API, Database, and Socket broadcasts.
+*   **Hardware-in-the-Loop Testing:** Sending commands to physical ESP32 boards to ensure gate relays fired within the acceptable latency threshold.
+*   **User Acceptance Testing (UAT):** Providing the mobile app to non-technical users to observe their journey from registration to booking, identifying UX bottlenecks.
+
+### 5.2 Comprehensive Test Cases
+| ID | Module | Scenario / Action | Expected Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- |
+| **TC-AU-01** | Auth | Register with an email that already exists in DB. | System rejects with 400 error; UI shows "Email in use". | Pass |
+| **TC-AU-02** | Auth | Login with valid credentials. | JWT Token generated; user navigated to Home. | Pass |
+| **TC-ML-01** | Grid | User opens Mall view. | Grid populates instantly; disabled spots are greyed out. | Pass |
+| **TC-ML-04** | Socket | Admin disables Spot 10. | Spot 10 turns grey on all connected mobile apps instantly. | Pass |
+| **TC-RS-01** | Booking | User books an available spot for 2 hours. | Spot reserved; User deducted amount; Points awarded. | Pass |
+| **TC-RS-02** | Booking | Race condition: Users A & B book Spot 5 simultaneously. | User A gets success; User B gets "Spot unavailable" error. | Pass |
+| **TC-RS-03** | Billing | User applies a 50% reward discount on a \$20 booking. | Final price charged is \$10; Reward is consumed. | Pass |
+| **TC-IoT-01**| IoT | User verifies arrival at gate via app. | Spot turns RED; Gate relay triggers OPEN. | Pass |
+| **TC-IoT-02**| IoT | User selects "Leave Early" on mobile prompt. | Spot turns GREEN; Gate triggers CLOSE; Booking completes. | Pass |
+| **TC-AD-01** | Admin | Admin bans a user account. | User's active JWT is invalidated; forcefully logged out. | Pass |
+
+### 5.3 Real-World Edge Case Scenarios
+1.  **The Server Crash & Recovery:** If the Node.js server restarts unexpectedly, the \`startStatusSyncJob\` immediately re-evaluates all active bookings upon boot, restoring the grid colors to their correct state without manual intervention.
+2.  **The Late Arrival:** If a user books a spot from 2 PM to 4 PM, but does not arrive to verify their plate by 4 PM, the background worker automatically flags the reservation as "cancelled" and frees the spot to 'Green' to prevent revenue loss for the mall.
+3.  **Network Drop at Payment:** If the user's connection drops right as they tap "Pay", the atomic database transaction ensures the spot is either fully booked or fully reverted, preventing a "ghost booking" scenario.
+
+### 5.4 Bug Reports & Resolutions
+*   **#BUG-001:** *Issue:* Two users could occasionally book the same spot if their requests hit different CPU threads exactly simultaneously. *Resolution:* Migrated the booking query to use atomic \`findOne\` with strict time-overlap \`\$or\` clauses, ensuring MongoDB handles the concurrency lock.
+*   **#BUG-004:** *Issue:* Mobile app performance degraded after 20 minutes of usage due to thousands of Socket events stacking up. *Resolution:* Implemented proper \`dispose()\` logic in the Flutter stateful widgets to unsubscribe from Socket listeners when navigating away from the Grid screen.
+
+---
+
+## Chapter 6: Conclusion and Future Work
+*[Delivered by Week 13 - Second Semester]*
+
+### 6.1 Conclusion
+The iPARK system successfully demonstrates that physical infrastructure challenges like parking management can be radically optimized through modern software engineering. By coupling a highly responsive, aesthetically premium mobile application with a real-time, event-driven Node.js backend and physical IoT hardware, iPARK delivers a frictionless end-to-end parking experience. The project conclusively proves that WebSocket communication protocols are robust enough to handle the mission-critical synchronization required between cloud databases and physical parking gates, and that a single Node.js server can act as the intelligent orchestrator between mobile users and physical infrastructure.
+
+The system achieved all five core objectives:
+1. ✅ Real-time parking grid accurate to within 1 second.
+2. ✅ Conflict-free atomic reservation booking preventing double-booking.
+3. ✅ Physical gate automation via ESP32 WebSocket integration.
+4. ✅ Dynamic pricing with loyalty point deductions.
+5. ✅ Built-in live support chat between users and staff.
+
+### 6.2 Current Limitations
+While the system is fully functional for demonstration and academic purposes, the current version has the following acknowledged limitations that form the basis of future work:
+*   **Simulated OTP:** The OTP is currently returned in the API response body rather than sent via a real SMS gateway. This means any real-world phone number cannot be verified without a third-party SMS integration.
+*   **Simulated Payments:** The billing system calculates accurate costs and deducts loyalty points, but does not actually charge a real credit/debit card. A payment gateway integration is required for production.
+*   **Local Deployment:** The backend server runs on a local machine (LAN network). It is not accessible from the public internet without a tunnel tool (like ngrok) or a proper cloud deployment.
+
+### 6.3 Future Work
+
+#### Priority 1: Real SMS-Based OTP Verification (Twilio / Firebase Phone Auth)
+**Current State:** OTPs are generated server-side and returned in the API response. This is a placeholder for development purposes only.
+
+**Proposed Solution:** Integrate a real SMS gateway to deliver OTPs to user phone numbers. Two industry-standard approaches are recommended:
+
+*   **Option A — Twilio SMS API:** The backend would call \`client.messages.create({ to: phoneNumber, from: twilioNumber, body: 'Your iPARK OTP is: \${otp}' })\` after generating the OTP. This requires a paid Twilio account but gives full control.
+*   **Option B — Firebase Phone Authentication:** Delegate the entire OTP flow to Google Firebase. The Flutter app uses the \`firebase_auth\` package to trigger \`verifyPhoneNumber()\`, which handles delivery, UI, and token validation entirely within the Google ecosystem.
+
+**Implementation Steps:**
+1. Add phone number field to the User registration schema.
+2. Integrate Twilio SDK (\`npm install twilio\`) into \`authController.js\`.
+3. Replace the OTP-in-response line with \`twilioClient.messages.create(...)\`.
+4. Update the Flutter registration screen to include a phone number input field.
+5. Update the OTP verification screen to submit the code received via SMS.
+
+---
+
+#### Priority 2: Real Payment Gateway Integration (Stripe)
+**Current State:** The system accurately calculates the booking cost (hourly rate × duration − promo/rewards) and records the \`amount\` field in the Reservation document, but does not actually process a real financial transaction.
+
+**Proposed Solution:** Integrate the **Stripe Payment Gateway** to handle real card transactions securely.
+
+**Architecture:**
+1. **Backend:** Install the Stripe Node SDK (\`npm install stripe\`). Create a new endpoint \`POST /api/payment/create-intent\` that calls \`stripe.paymentIntents.create({ amount, currency: 'usd' })\` and returns a \`clientSecret\` to the Flutter app.
+2. **Frontend:** Add the \`flutter_stripe\` package to \`pubspec.yaml\`. On the Booking Sheet, instead of directly submitting, first call the backend to get a \`clientSecret\`, then invoke \`Stripe.instance.initPaymentSheet(...)\` and present the native Stripe Payment Sheet UI.
+3. **Webhook:** Register a Stripe webhook on \`POST /api/payment/webhook\` to confirm payment success server-side before creating the reservation in the database.
+
+**Security Note:** The secret Stripe API key (\`sk_live_...\`) must **never** be embedded in the Flutter app. It must always remain on the backend server, accessed only via environment variables.
+
+---
+
+#### Priority 3: Cloud Deployment (Going Online / Public Access)
+**Current State:** The iPARK backend runs on a local developer machine (localhost:5000). Users outside the same Wi-Fi network cannot access it.
+
+**Proposed Production Deployment Architecture:**
+
+| Component | Recommended Service | Notes |
+| :--- | :--- | :--- |
+| **Backend API** | Railway / Render / AWS EC2 | Node.js server hosted on a public IP with a domain. |
+| **Database** | MongoDB Atlas (Cloud) | Already cloud-based; switch the \`MONGO_URI\` to the Atlas cluster URL. |
+| **Domain & SSL** | Cloudflare / Namecheap | A real domain (e.g., \`api.ipark.app\`) with automatic HTTPS/WSS. |
+| **Environment Variables** | Railway Secrets / AWS Secrets Manager | Store \`JWT_SECRET\`, \`STRIPE_KEY\`, \`TWILIO_SID\` securely. |
+| **Mobile App Distribution** | Google Play Store / Apple TestFlight | Production Flutter build pointing to the live API URL. |
+
+**Deployment Steps:**
+1. Push the backend code to a GitHub repository.
+2. Connect the repository to Railway.app (free tier available). Railway auto-detects Node.js and runs \`node server.js\`.
+3. Set all environment variables in the Railway dashboard (MongoDB URI, JWT Secret, etc.).
+4. Update the Flutter app's \`ApiService\` base URL from \`http://192.168.x.x:5000\` to \`https://api.ipark.app\`.
+5. Build the Flutter APK: \`flutter build apk --release\` and upload to Google Play.
+
+---
+
+#### Priority 4: Computer Vision — Automatic License Plate Recognition (ALPR)
+Replace manual car plate entry with AI-driven camera recognition at the gate. An OpenCV or a cloud-based ALPR API (e.g., Plate Recognizer) would analyze the camera feed and automatically look up the matching reservation, creating a completely touchless entry experience.
+
+#### Priority 5: Machine Learning Predictive Analytics
+Utilize historical booking data stored in MongoDB to train a time-series prediction model. The model would forecast peak occupancy periods, allowing the system to automatically implement surge pricing during high-demand times, optimizing revenue for mall operators.
+
+#### Priority 6: Indoor Navigation via BLE Beacons
+Integrate Bluetooth Low Energy (BLE) beacons within the parking structure to provide turn-by-turn indoor navigation on the Flutter app, guiding the driver directly to their reserved spot number — bypassing GPS signal loss that occurs inside enclosed garages.
+
+#### Priority 7: Electric Vehicle (EV) Charging Slot Integration
+Add a \`hasCharger: Boolean\` field to the Spot model. The Flutter UI would allow drivers to filter the grid to only show EV-capable spots. Billing would integrate with the charger hardware to combine parking and charging costs into a single invoice.
+
+---
+
+## References
+1. E. Gamma, R. Helm, R. Johnson, J. Vlissides, *Design Patterns: Elements of Reusable Object-Oriented Software*, Addison-Wesley, 1994.
+2. Google LLC, *Flutter Architecture Overview*, developer.flutter.dev, 2024.
+3. MongoDB Inc., *NoSQL Scalability in Modern Applications*, mongodb.com, 2024.
+4. Socket.IO Team, *Socket.IO Documentation v4*, socket.io/docs, 2024.
+5. Stripe Inc., *Stripe Payments API Reference*, stripe.com/docs, 2024.
+6. Twilio Inc., *Twilio SMS REST API Documentation*, twilio.com/docs, 2024.
+7. T. Berners-Lee, R. Fielding, L. Masinter, *RFC 2616 — Hypertext Transfer Protocol HTTP/1.1*, IETF, 1999.
+8. N. Grigorik, *High Performance Browser Networking*, O'Reilly Media, 2013.
+`;
+
+        // Render Markdown to HTML using marked
+        document.getElementById('content').innerHTML = marked.parse(rawMarkdown);
+
+        // Convert code blocks with 'language-mermaid' to div class='mermaid' so Mermaid.js can render them
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const container = document.createElement('div');
+            container.className = 'mermaid';
+            container.textContent = block.textContent;
+            block.parentNode.replaceWith(container);
+        });
+
+        // Tell mermaid to render the new diagrams
+        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+    </script>
+</body>
+</html>

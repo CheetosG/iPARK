@@ -1,0 +1,69 @@
+--- RECENT ERRORS (Last 10 Min) ---
+Code: BE-GEN-500
+Message: User is not defined
+Path: /api/admin/stats
+Method: GET
+Stack: ReferenceError: User is not defined
+    at E:\code\graduatin project\ipart2\ipark\backend\controllers\adminController.js:6:22
+    at E:\code\graduatin project\ipart2\ipark\backend\utils\catchAsync.js:4:9
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at checkAdmin (E:\code\graduatin project\ipart2\ipark\backend\middleware\auth.js:22:5)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at authMiddleware (E:\code\graduatin project\ipart2\ipark\backend\middleware\auth.js:14:5)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+Time: Wed Apr 01 2026 09:31:46 GMT+0200 (Eastern European Standard Time)
+---------------------------------
+Code: BE-GEN-500
+Message: Reservation is not defined
+Path: /api/reservation/my-activity
+Method: GET
+Stack: ReferenceError: Reservation is not defined
+    at E:\code\graduatin project\ipart2\ipark\backend\controllers\reservationController.js:110:24
+    at E:\code\graduatin project\ipart2\ipark\backend\utils\catchAsync.js:4:9
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at authMiddleware (E:\code\graduatin project\ipart2\ipark\backend\middleware\auth.js:14:5)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:117:3)
+    at handle (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+Time: Wed Apr 01 2026 09:31:44 GMT+0200 (Eastern European Standard Time)
+---------------------------------
+Code: BE-GEN-500
+Message: User is not defined
+Path: /api/user/profile
+Method: GET
+Stack: ReferenceError: User is not defined
+    at E:\code\graduatin project\ipart2\ipark\backend\controllers\userController.js:6:16
+    at E:\code\graduatin project\ipart2\ipark\backend\utils\catchAsync.js:4:9
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at authMiddleware (E:\code\graduatin project\ipart2\ipark\backend\middleware\auth.js:14:5)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:117:3)
+    at handle (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+Time: Wed Apr 01 2026 09:31:44 GMT+0200 (Eastern European Standard Time)
+---------------------------------
+Code: BE-GEN-500
+Message: User is not defined
+Path: /api/user/profile
+Method: GET
+Stack: ReferenceError: User is not defined
+    at E:\code\graduatin project\ipart2\ipark\backend\controllers\userController.js:6:16
+    at E:\code\graduatin project\ipart2\ipark\backend\utils\catchAsync.js:4:9
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at authMiddleware (E:\code\graduatin project\ipart2\ipark\backend\middleware\auth.js:14:5)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+    at next (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\route.js:117:3)
+    at handle (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (E:\code\graduatin project\ipart2\ipark\backend\node_modules\router\lib\layer.js:152:17)
+Time: Wed Apr 01 2026 09:31:44 GMT+0200 (Eastern European Standard Time)
+---------------------------------

@@ -1,0 +1,61 @@
+// lib/widgets/responsive_layout.dart
+import 'package:flutter/material.dart';
+
+class ResponsiveLayout extends StatelessWidget {
+  final Widget mobile;
+  final Widget? tablet;
+  final Widget? desktop;
+
+  const ResponsiveLayout({
+    super.key,
+    required this.mobile,
+    this.tablet,
+    this.desktop,
+  });
+
+  static bool isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.width < 600;
+
+  static bool isTablet(BuildContext context) =>
+      MediaQuery.of(context).size.width >= 600 &&
+      MediaQuery.of(context).size.width < 1200;
+
+  static bool isDesktop(BuildContext context) =>
+      MediaQuery.of(context).size.width >= 1200;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= 1200 && desktop != null) {
+          return desktop!;
+        } else if (constraints.maxWidth >= 600 && tablet != null) {
+          return tablet!;
+        } else {
+          return mobile;
+        }
+      },
+    );
+  }
+}
+
+class ResponsiveWrapper extends StatelessWidget {
+  final Widget child;
+  final double maxWidth;
+
+  const ResponsiveWrapper({
+    super.key,
+    required this.child,
+    this.maxWidth = 500,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        child: child,
+      ),
+    );
+  }
+}
